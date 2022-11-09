@@ -6,10 +6,10 @@ vol="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
 if [ $# -gt 0 ]; then
     stat="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)].*/\1/')"
     if [[ $(echo $stat) == "on" ]]; then
-    	echo " 🔊  $vol"
+    	echo " 🔊  $vol%"
     	exit
     fi
-    echo " 🔇  $vol"
+    echo " 🔇  $vol%"
     exit
 fi
 

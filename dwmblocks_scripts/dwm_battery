@@ -1,0 +1,23 @@
+#!/bin/sh
+
+prct=$(upower -d | grep percentage | sed -n "1p" | sed -e 's/^.* //')
+prctonly=$(upower -d | grep percentage | sed -n "1p" | sed -e 's/^.* //' | sed 's/%//')
+stat=$(upower -d | grep -m1 state | sed -e 's/^.* //')
+
+## if any argument
+if [ $# -gt 0 ]; then
+	if [[ $stat == "charging" ]]; then
+		echo "  ⚡ $prct"
+		exit
+	fi
+
+	if [[ $prctonly -gt 30 ]]; then
+		echo "  🔋 $prct"
+		exit
+	fi
+
+	echo "  🪫 $prct"
+	exit
+fi
+
+echo $prct

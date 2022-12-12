@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 eth="$(ip -4 addr show enp8s0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')"
 wlp="$(ip -4 addr show wlp7s0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')"
 

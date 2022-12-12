@@ -1,19 +1,5 @@
-#!/bin/sh
+#!/bin/bash
 
-vol="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
+vol="$(pamixer --get-volume-human)"
+echo "VOL $vol"
 
-## if any argument
-if [ $# -gt 0 ]; then
-    stat="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)].*/\1/')"
-    if [[ $(echo $stat) == "on" ]]; then
-    	echo "VOL $vol%"
-    	exit
-    fi
-    echo "MUT $vol%"
-    exit
-fi
-
-
-## just returns volume %
-vol="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
-echo -e "$vol"

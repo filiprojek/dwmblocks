@@ -1,0 +1,12 @@
+#!/bin/bash
+
+ssid="$(wpa_cli status | grep ssid | sed -n '2p' | awk -F '=' '{print $2}')"
+
+if [[ $(echo $ssid | wc -c) -gt 1 ]]
+then
+    echo "$ssid"
+    exit;
+fi
+
+echo ""
+

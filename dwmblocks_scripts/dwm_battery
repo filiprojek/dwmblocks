@@ -1,17 +1,7 @@
 #!/bin/bash
 
-prct=$(upower -d | grep percentage | sed -n "1p" | sed -e 's/^.* //')
-prctonly=$(upower -d | grep percentage | sed -n "1p" | sed -e 's/^.* //' | sed 's/%//')
-stat=$(upower -d | grep -m1 state | sed -e 's/^.* //')
+prct=$(acpi | grep 'Discharging' | awk '{print $4}' | sed 's/,//')
+batid=$(acpi | grep 'Discharging' | awk '{print $2}' | sed 's/://')
 
-## if any argument
-if [ $# -gt 0 ]; then
-	if [[ $stat == "charging" ]]; then
-		echo "BAT $prct +"
-		exit
-	fi
-	echo "BAT $prct -"
-	exit
-fi
+echo "BAT$batid $prct -"
 
-echo $prct

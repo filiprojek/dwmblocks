@@ -3,5 +3,21 @@
 prct=$(acpi | grep 'Discharging' | awk '{print $4}' | sed 's/,//')
 batid=$(acpi | grep 'Discharging' | awk '{print $2}' | sed 's/://')
 
+# If charged
+if [[ $(acpi | grep 'Discharging' | wc -c) -eq $(acpi | grep 'Charging' | wc -c) ]]; then
+	echo "BAT charged"
+	exit
+fi
+
+# If charging
+if [[ "$(acpi | grep 'Charging' | wc -c)" -gt 0 ]]; then 
+	chg_id=$(acpi | grep 'Charging' | awk '{print $2'} | sed 's/://')
+	chg_prct=$(acpi | grep 'Charging' | awk '{print $4'} | sed 's/,//')
+
+	echo "BAT$chg_id $chg_prct +"
+	exit
+fi
+
+# If discharging
 echo "BAT$batid $prct -"
 
